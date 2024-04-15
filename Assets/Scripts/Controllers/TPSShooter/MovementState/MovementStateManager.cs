@@ -36,6 +36,10 @@ public class MovementStateManager : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
+        _walkSpeed = 3;
+        _walkBackSpeed = 2;
+        _RunSpeed = 7;
+        _RunBackSpeed = 5;
         SwitchState(_Idle);
     }
 
