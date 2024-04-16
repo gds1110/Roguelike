@@ -4,23 +4,36 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    float _lifeTime=1.0f;
-   public Poolable _poolable;
+    float _lifeTime=10.0f;
+    public Poolable _poolable;
+    public OrbitBullet _orbit;
+    public bool _isPassive = false;
+    public bool _isOrbit = false;
     void Start()
     {
         gameObject.layer = 8;
         _poolable = gameObject.GetComponent<Poolable>();
-
-        if (_poolable != null)
-        {
-            StartCoroutine(BackToPool());
-        }
+        _orbit = gameObject.GetComponent<OrbitBullet>();
+        //if (_poolable != null)
+        //{
+        //    if (_isPassive == false)
+        //    {
+        //        StartCoroutine(BackToPool());
+        //    }
+        //}
     }
     private void OnEnable()
     {
         if (_poolable != null)
         {
-            StartCoroutine(BackToPool());
+            if (_isPassive == false)
+            {
+                if(_orbit._isOrbit==true)
+                {
+                    return;
+                }
+                StartCoroutine(BackToPool());
+            }
         }
     
     }

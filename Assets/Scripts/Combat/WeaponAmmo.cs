@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class WeaponAmmo : MonoBehaviour
     public int _extraAmmo;
     public int _currentAmmo;
     public bool _isUnlimit = true;
+
+    public Action _reloadAction=null;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,8 @@ public class WeaponAmmo : MonoBehaviour
 
     public void Reload()
     {
+        _reloadAction.Invoke();
+
         if (_isUnlimit == true)
         {
             _currentAmmo = _clipSize;

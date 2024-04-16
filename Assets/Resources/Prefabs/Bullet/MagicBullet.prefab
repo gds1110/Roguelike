@@ -19447,6 +19447,7 @@ GameObject:
   - component: {fileID: -8501001340069509604}
   - component: {fileID: 6087936870933921854}
   - component: {fileID: 4155162469362118167}
+  - component: {fileID: 7431184780248405304}
   m_Layer: 0
   m_Name: MagicBullet
   m_TagString: Untagged
@@ -19526,6 +19527,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5954e73322f1b5a4fb006f48d3a0d169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _poolable: {fileID: 0}
+  _isPassive: 0
+  _isOrbit: 0
+--- !u!114 &7431184780248405304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6830094554140918210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d34a02c0ecbe040b6385f15f65580e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
+  _orbitSpeed: 5
 --- !u!1 &8237968504001264741
 GameObject:
   m_ObjectHideFlags: 0
