@@ -7,15 +7,19 @@ public class Managers : MonoBehaviour
 
     static Managers s_instance;
     static Managers Instance { get { Init(); return s_instance; } }
-
-
-    DataManager _dataManager= new DataManager();
+    #region Contents
+    GameManager _game = new GameManager();
+    public static GameManager Game { get { return Instance._game; } }
+    #endregion
+    #region Core
+    DataManager _dataManager = new DataManager();
     InputManager _input = new InputManager();
     ResourceManager _resource = new ResourceManager();
     UIManager _uiManager = new UIManager();
     SceneManagerEx _sceneManager = new SceneManagerEx();
     SoundManager _sound = new SoundManager();   
-    PoolManager _pool = new PoolManager();  
+    PoolManager _pool = new PoolManager();
+ 
     public static DataManager Data { get { return Instance._dataManager; } }    
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -26,7 +30,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
 
     public static PoolManager Pool { get { return Instance._pool; } }
-
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
