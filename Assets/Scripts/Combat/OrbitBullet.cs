@@ -8,21 +8,7 @@ public class OrbitBullet : MonoBehaviour
     public float _orbitSpeed=5;
     Vector3 _offSet;
     public bool _isOrbit = false;
-
-    void Start()
-    {
-
-    
-    }
-    private void OnEnable()
-    {
-
-    }
-    private void OnDisable()
-    {
-        _isOrbit = false;
-    }
-
+    Vector3 _normalize;
     void Update()
     {
         if(_isOrbit==false)
@@ -37,6 +23,14 @@ public class OrbitBullet : MonoBehaviour
         }
     }
 
+    public void TestSetOrbitPos(Vector3 pos,Transform target,float orbitSpeed)
+    {
+        transform.position = pos; //각도 및 거리
+        _offSet = transform.position - target.position;
+        _isOrbit = true;
+
+    }
+
     public void SetOrbit(Transform target,float orbitSpeed,Vector3 offset)
     {
         transform.position = offset;
@@ -45,6 +39,13 @@ public class OrbitBullet : MonoBehaviour
         _orbitSpeed = orbitSpeed;
         _target = target;
     }
+    public void SetOffset(Vector3 offset,Transform target)
+    {
+        _target = target;
 
+        transform.position = offset;
+        _offSet = transform.position - target.position;
+        _isOrbit = true;
+    }
   
 }

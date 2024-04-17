@@ -14,27 +14,11 @@ public class Projectile : MonoBehaviour
         gameObject.layer = 8;
         _poolable = gameObject.GetComponent<Poolable>();
         _orbit = gameObject.GetComponent<OrbitBullet>();
-        //if (_poolable != null)
-        //{
-        //    if (_isPassive == false)
-        //    {
-        //        StartCoroutine(BackToPool());
-        //    }
-        //}
+
     }
     private void OnEnable()
     {
-        if (_poolable != null)
-        {
-            if (_isPassive == false)
-            {
-                if(_orbit._isOrbit==true)
-                {
-                    return;
-                }
-                StartCoroutine(BackToPool());
-            }
-        }
+      
     
     }
     IEnumerator BackToPool()

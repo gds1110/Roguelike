@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponOrbit : MonoBehaviour
@@ -11,6 +12,8 @@ public class WeaponOrbit : MonoBehaviour
     public WeaponAmmo _ammo;
     public float _divideAngle;
     public Queue<GameObject> _viewBullets;
+    public Queue<GameObject> _offBullets;
+    public List<GameObject> _Bullets;
     public GameObject _currentBullet;
     public float _orbitSpeed;
 
@@ -25,49 +28,27 @@ public class WeaponOrbit : MonoBehaviour
         {
             
             _viewBullets = new Queue<GameObject>();
+            _offBullets = new Queue<GameObject>();
 
             if(_weaponManager != null )
             {
                 _currentBullet = _weaponManager.bullet;
-
-                ReloadOrbit();
+                InitOrbit();
             }
            
         }
         _ammo._reloadAction -= ReloadOrbit;
         _ammo._reloadAction += ReloadOrbit;
+    
 
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void InitOrbit()
     {
-        
-    }
-
-    void GetDivideAngle()
-    {
-        float divideAngle = 360f / _numberOrbit;
-        for(int i=0;i<_numberOrbit;i++)
-        {
-
-        }
-    }
-
-
-
-    public void ReloadOrbit()
-    {
-
-        _numberOrbit = _ammo._clipSize ;
+        _numberOrbit = _ammo._clipSize;
         _currentNumberOrbit = _numberOrbit;
-
-        ReloadOrbit(_numberOrbit);
-    }
-    public void ReloadOrbit(int ammoNum)
-    {
-      
-        for (int i = 0; i < ammoNum; i++)
+        for (int i = 0; i < _numberOrbit; i++)
         {
             GameObject go = Managers.Pool.Pop(_currentBullet, this.transform).gameObject;
             if (go != null)
@@ -77,15 +58,65 @@ public class WeaponOrbit : MonoBehaviour
                 {
                     Rigidbody rb = orbit.GetComponent<Rigidbody>();
                     rb.useGravity = false;
-                    Vector3 orbitPos = GetInitOrbitPos(i);
-                    orbit.SetOrbit(_characterController.transform, _orbitSpeed, orbitPos);
-                    //orbit.transform.position = new Vector3(orbitPos.x, 1.0f, orbitPos.y);
-                    _viewBullets.Enqueue(orbit.gameObject);
+                    //Vector3 orbitPos = GetInitOrbitPos(i);
+                    //orbit.SetOrbit(_characterController.transform, _orbitSpeed, orbitPos);
+                    Vector3 orbitPos = _characterController.transform.position + GetNorm(i);
+                    orbit.TestSetOrbitPos(orbitPos, _characterController.transform, _orbitSpeed);
+                    _viewBullets.Enqueue(go);
+                    _Bullets.Add(go);
                 }
             }
 
         }
     }
+
+
+    public void ReloadOrbit()
+    {
+        for (int i = 0; i < _Bullets.Count; i++)
+        {
+            OrbitBullet orbit = _Bullets[i].GetComponent<OrbitBullet>();
+            Vector3 orbitPos = _characterController.transform.position + GetNorm(i);
+            orbit.TestSetOrbitPos(orbitPos, _characterController.transform, _orbitSpeed);
+        }
+        while (_offBullets.Count > 0)
+        {
+            GameObject go =_offBullets.Dequeue();
+            go.SetActive(true);
+            _viewBullets.Enqueue(go);
+        }
+        _currentNumberOrbit = _numberOrbit;
+ 
+    }
+
+    public void RefershOrbit()
+    {
+
+
+    }
+    public void fireOrbit()
+    {
+        if(_currentNumberOrbit>0&&_viewBullets.Count>0)
+        {
+            _currentNumberOrbit--;
+            GameObject go = _viewBullets.Dequeue();
+            go.SetActive(false);
+            OrbitBullet orbit = go.gameObject.GetComponent<OrbitBullet>();
+            orbit._isOrbit = false;
+            _offBullets.Enqueue(go);
+        }
+    }
+
+    public Vector3 GetNorm(int num)
+    {
+        float divideAngle = 360f / _numberOrbit;
+        float tempAngle = num * divideAngle;
+        float tempRadian = tempAngle * Mathf.Deg2Rad;
+
+        return new Vector3(Mathf.Cos(tempRadian), 1f, Mathf.Sin(tempRadian));
+    }
+
+
     public Vector3 GetInitOrbitPos(int num)
     {
         float divideAngle = 360f / _numberOrbit;
@@ -108,54 +139,5 @@ public class WeaponOrbit : MonoBehaviour
         return new Vector3(tempX + Mathf.Cos(tempRadian) * 1f, 1f, tempY + Mathf.Sin(tempRadian) * 1f);
     }
 
-    public void RefershOrbit()
-    {
-        float divideAngle = 360f / _currentNumberOrbit;
-        while (_viewBullets.Count > 0)
-        {
-            GameObject go = _viewBullets.Dequeue();
-            Poolable poolable = go.GetComponent<Poolable>();
-            if (poolable)
-            {
-                Managers.Pool.Push(poolable);
-            }
-            else
-            {
-                Destroy(poolable.gameObject);
-            }
-        }
 
-        _viewBullets.Clear();
-
-        for (int i = 0; i < _currentNumberOrbit; i++)
-        {
-            GameObject go = Managers.Pool.Pop(_currentBullet, this.transform).gameObject;
-            if (go != null)
-            {
-                OrbitBullet orbit = go.GetComponent<OrbitBullet>();
-                if (orbit != null)
-                {
-                    Rigidbody rb = orbit.GetComponent<Rigidbody>();
-                    rb.useGravity = false;
-                    Vector3 orbitPos = GetOrbitPos(i);
-                    orbit.SetOrbit(_characterController.transform, _orbitSpeed, orbitPos);
-                    _viewBullets.Enqueue(orbit.gameObject);
-                }
-            }
-
-        }
-
-    }
-    public GameObject GetOrbitBullet()
-    {
-        if (_viewBullets.Count > 0)
-        {
-            GameObject go = _viewBullets.Peek();
-            _viewBullets.Dequeue();
-            _currentNumberOrbit = _viewBullets.Count;
-            return go;
-        }
-
-        return null;
-    }
 }

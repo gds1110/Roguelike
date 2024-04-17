@@ -87,15 +87,13 @@ public class WeaponManager : MonoBehaviour
         _ammo._currentAmmo--;
         for (int i = 0; i < bulletPerShot; i++)
         {
-
-            GameObject currentBullet = _weaponOrbit.GetOrbitBullet();
+            Poolable currentBullet = Managers.Pool.Pop(bullet);
             currentBullet.transform.position = barrelPos.position;
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
             rb.useGravity = true;
             rb.velocity = Vector3.zero;
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
+            _weaponOrbit.fireOrbit();
         }
-
-        _weaponOrbit.RefershOrbit();
     }
 }

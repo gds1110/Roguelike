@@ -25,7 +25,6 @@ public class WeaponAmmo : MonoBehaviour
     public void Reload()
     {
         _reloadAction.Invoke();
-
         if (_isUnlimit == true)
         {
             _currentAmmo = _clipSize;
