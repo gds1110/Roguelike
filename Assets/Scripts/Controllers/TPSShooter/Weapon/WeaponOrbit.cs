@@ -61,7 +61,7 @@ public class WeaponOrbit : MonoBehaviour
                     //Vector3 orbitPos = GetInitOrbitPos(i);
                     //orbit.SetOrbit(_characterController.transform, _orbitSpeed, orbitPos);
                     Vector3 orbitPos = _characterController.transform.position + GetNorm(i);
-                    orbit.TestSetOrbitPos(orbitPos, _characterController.transform, _orbitSpeed);
+                    orbit.SetOrbit(_characterController.transform, _orbitSpeed,orbitPos);
                     _viewBullets.Enqueue(go);
                     _Bullets.Add(go);
                 }
@@ -77,7 +77,7 @@ public class WeaponOrbit : MonoBehaviour
         {
             OrbitBullet orbit = _Bullets[i].GetComponent<OrbitBullet>();
             Vector3 orbitPos = _characterController.transform.position + GetNorm(i);
-            orbit.TestSetOrbitPos(orbitPos, _characterController.transform, _orbitSpeed);
+            orbit.SetOrbit(_characterController.transform, _orbitSpeed, orbitPos);
         }
         while (_offBullets.Count > 0)
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class OrbitBullet : MonoBehaviour
 {
@@ -23,19 +24,12 @@ public class OrbitBullet : MonoBehaviour
         }
     }
 
-    public void TestSetOrbitPos(Vector3 pos,Transform target,float orbitSpeed)
+
+    public void SetOrbit(Transform target,float orbitSpeed,Vector3 pos)
     {
         transform.position = pos; //각도 및 거리
         _offSet = transform.position - target.position;
         _isOrbit = true;
-
-    }
-
-    public void SetOrbit(Transform target,float orbitSpeed,Vector3 offset)
-    {
-        transform.position = offset;
-        _isOrbit = true;
-        _offSet = transform.position - target.position;
         _orbitSpeed = orbitSpeed;
         _target = target;
     }

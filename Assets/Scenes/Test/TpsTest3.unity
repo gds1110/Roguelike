@@ -738,6 +738,7 @@ MonoBehaviour:
   _weaponManager: {fileID: 0}
   _ammo: {fileID: 0}
   _divideAngle: 0
+  _Bullets: []
   _currentBullet: {fileID: 0}
   _orbitSpeed: 0
 --- !u!1 &2109704686
@@ -881,6 +882,10 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 2109704687}
+    - target: {fileID: 6464985080830031854, guid: 94abda77bf0e41e4489b085bf0380811, type: 3}
+      propertyPath: _fireRate
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8115822265577313539, guid: 94abda77bf0e41e4489b085bf0380811, type: 3}
       propertyPath: m_WarningMessage
       value: 

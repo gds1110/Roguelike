@@ -19,12 +19,14 @@ public class WeaponAmmo : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) Reload();
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Reload();
+            _reloadAction.Invoke();
+        }
     }
 
     public void Reload()
     {
-        _reloadAction.Invoke();
         if (_isUnlimit == true)
         {
             _currentAmmo = _clipSize;

@@ -27,6 +27,9 @@ public class WeaponManager : MonoBehaviour
     ActionStateManager _actionState;
     public Action _fireAction;
 
+    public float _lastClickedTime = 0;
+    public int _comboCount = 0;
+    public int _maxComboCount = 3;
     void Start()
     {
 
@@ -35,6 +38,8 @@ public class WeaponManager : MonoBehaviour
         _ammo = GetComponent<WeaponAmmo>(); 
         _actionState = GetComponentInParent<ActionStateManager>();
         _weaponOrbit = GetComponent<WeaponOrbit>();
+        _comboCount = 0;
+        _maxComboCount = 3;
     }
 
     // Update is called once per frame
@@ -83,7 +88,14 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("Orbit Fire");
         _fireRateTimer = 0;
         barrelPos.LookAt(_aim._aimPos);
+
+        CheckFireTime();
         Managers.Sound.Play("ShootAudio", Define.Sound.Effect, 1.5f);
+
+        _comboCount++;
+        _actionState._anim.SetInteger("ComboCount", _comboCount % _maxComboCount);
+        _actionState._anim.SetTrigger("Fire");
+
         _ammo._currentAmmo--;
         for (int i = 0; i < bulletPerShot; i++)
         {
@@ -95,5 +107,15 @@ public class WeaponManager : MonoBehaviour
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
             _weaponOrbit.fireOrbit();
         }
+    }
+
+    void CheckFireTime()
+    {
+        if(_lastClickedTime-Time.time>1)
+        {
+            _comboCount = 0;
+        }
+
+        _lastClickedTime = Time.time; 
     }
 }

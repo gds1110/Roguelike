@@ -120,11 +120,8 @@ public class PoolManager
     }
     public Poolable PopAutoPush(GameObject original, Transform parent = null,float lifeTime= 10f)
     {
-        if (_pool.ContainsKey(original.name) == false)
-        {
-            CreatePool(original);
-        }
-        Poolable poolable = _pool[original.name].Pop(parent);
+        
+        Poolable poolable = Pop(original,parent);
         poolable.SetBackTime(lifeTime);
         return poolable;
     }
