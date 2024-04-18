@@ -738,7 +738,6 @@ MonoBehaviour:
   _weaponManager: {fileID: 0}
   _ammo: {fileID: 0}
   _divideAngle: 0
-  _Bullets: []
   _currentBullet: {fileID: 0}
   _orbitSpeed: 0
 --- !u!1 &2109704686

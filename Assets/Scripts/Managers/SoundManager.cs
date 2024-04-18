@@ -42,7 +42,7 @@ public class SoundManager
 
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
-      AudioClip audioClip =   GetOrAddAudioClip(path, type);
+      AudioClip audioClip =GetOrAddAudioClip(path, type);
       Play(audioClip, type, pitch);
     }
 
@@ -68,6 +68,7 @@ public class SoundManager
         {
             AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
             audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
             audioSource.PlayOneShot(audioClip);
         }
 
