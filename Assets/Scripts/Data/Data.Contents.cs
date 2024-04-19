@@ -11,8 +11,9 @@ namespace Data
     public class Stat
     {
         public int level;  //이름 , 타입 맞춰야함
-        public int hp;
+        public int maxHp;
         public int attack;
+        public int totalExp;
     }
 
 
