@@ -31,6 +31,8 @@ public class AimStateManager : MonoBehaviour
     [SerializeField] float _aimSmoothSpeed=20;
     [SerializeField] LayerMask _aimMask;
 
+    UI_CrossHair _crossHair;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,9 @@ public class AimStateManager : MonoBehaviour
         _anim = GetComponent<Animator>();   
 
         SwitchState(_hip);
+
+        _crossHair = Managers.UI.ShowSceneUI<UI_CrossHair>();
+
     }
 
     // Update is called once per frame

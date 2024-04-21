@@ -41,6 +41,8 @@ public class MovementStateManager : MonoBehaviour
         _RunSpeed = 7;
         _RunBackSpeed = 5;
         SwitchState(_Idle);
+
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
 
     // Update is called once per frame

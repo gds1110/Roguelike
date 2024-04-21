@@ -22,31 +22,32 @@ public class WeaponOrbit : MonoBehaviour
     {
         _characterController = GetComponentInParent<CharacterController>();
         _ammo = GetComponent<WeaponAmmo>();
-        _weaponManager = GetComponent<WeaponManager>();
+        _weaponManager = GetComponentInParent<WeaponManager>();
         _orbitSpeed = 30f;
-        if (_ammo)
-        {
-            
-            _viewBullets = new Queue<GameObject>();
-            _offBullets = new Queue<GameObject>();
-
-            if(_weaponManager != null )
-            {
-                _currentBullet = _weaponManager.bullet;
-                InitOrbit();
-            }
-           
-        }
+        _viewBullets = new Queue<GameObject>();
+        _offBullets = new Queue<GameObject>();
         _ammo._reloadAction -= ReloadOrbit;
         _ammo._reloadAction += ReloadOrbit;
     
 
     }
+    public void ResetOrbit()
+    {
+        _Bullets.Clear();
+        _viewBullets.Clear();
+        _offBullets.Clear();
+    }
+    public void InitOrbit(WeaponBased weapon)
+    {
+        _currentBullet = weapon._bullet;
+        ResetOrbit();
+        InitOrbit();
+    }
 
 
     public void InitOrbit()
     {
-        _numberOrbit = _ammo._clipSize;
+        _numberOrbit = _weaponManager._currentWeapon._ammoSize;
         _currentNumberOrbit = _numberOrbit;
         for (int i = 0; i < _numberOrbit; i++)
         {
@@ -58,8 +59,6 @@ public class WeaponOrbit : MonoBehaviour
                 {
                     Rigidbody rb = orbit.GetComponent<Rigidbody>();
                     rb.useGravity = false;
-                    //Vector3 orbitPos = GetInitOrbitPos(i);
-                    //orbit.SetOrbit(_characterController.transform, _orbitSpeed, orbitPos);
                     Vector3 orbitPos = _characterController.transform.position + GetNorm(i);
                     orbit.SetOrbit(_characterController.transform, _orbitSpeed,orbitPos);
                     _viewBullets.Enqueue(go);
@@ -89,11 +88,6 @@ public class WeaponOrbit : MonoBehaviour
  
     }
 
-    public void RefershOrbit()
-    {
-
-
-    }
     public void fireOrbit()
     {
         if(_currentNumberOrbit>0&&_viewBullets.Count>0)

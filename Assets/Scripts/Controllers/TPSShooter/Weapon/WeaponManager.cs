@@ -7,10 +7,6 @@ using Vector3 = UnityEngine.Vector3;
 
 public class WeaponManager : MonoBehaviour
 {
-    [Header("Fire Rate")]
-    [SerializeField] float _fireRate;
-    [SerializeField] bool _semiAuto;
-    float _fireRateTimer;
 
     [Header("Bullet Properties")]
     public GameObject bullet;
@@ -19,10 +15,11 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] int bulletPerShot;
 
     public WeaponBased _currentWeapon;
-    public WeaponOrbit _weaponOrbit;
+    public FireWeapon _fireWeapon;
+    public IceWeapon _iceWeapon;
+
     AimStateManager _aim;
 
-    WeaponAmmo _ammo;
 
     ActionStateManager _actionState;
     public Action _fireAction;
@@ -34,43 +31,42 @@ public class WeaponManager : MonoBehaviour
     {
 
         _aim = GetComponentInParent<AimStateManager>();
-        _fireRateTimer = _fireRate;
-        _ammo = GetComponent<WeaponAmmo>(); 
         _actionState = GetComponentInParent<ActionStateManager>();
-        _weaponOrbit = GetComponent<WeaponOrbit>();
+        _fireWeapon = GetComponentInChildren<FireWeapon>();
+        _iceWeapon = GetComponentInChildren<IceWeapon>();
+        _currentWeapon = _iceWeapon;
         _comboCount = 0;
         _maxComboCount = 3;
+
+        _currentWeapon.WeaponInit();
     }
 
     // Update is called once per frame
     void Update()
     {
         // if (ShouldFire()) Fire();
-        if (ShouldFire()) OrbitFire();
-    }
-
-
-    bool ShouldFire()
-    {
-        _fireRateTimer += Time.deltaTime;
-        if (_fireRateTimer < _fireRate) return false;
-        if (_ammo._currentAmmo == 0)
+        if(_currentWeapon==null)
         {
-          //  Managers.Sound.Play("NoAmmo");
-            return false;
+            return;
         }
-        if (_actionState._currentState == _actionState._reloadState) return false;
-        if (_semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
-        if (!_semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
-        return false;
+        if (ShouldFire(_currentWeapon)) OrbitFire(_currentWeapon);
     }
 
+    bool ShouldFire(WeaponBased weapon)
+    {
+        if (_actionState._currentState == _actionState._reloadState) return false;
+
+        return _currentWeapon.ShouldFire(weapon);
+    }
+
+
+    
     void Fire()
     {
-        _fireRateTimer = 0;
+        _currentWeapon._fireRateTimer = 0;
         barrelPos.LookAt(_aim._aimPos);
         Managers.Sound.Play("ShootAudio",Define.Sound.Effect,1.5f);
-        _ammo._currentAmmo--;
+        _currentWeapon._ammo._currentAmmo--;
         for(int i=0;i<bulletPerShot;i++)
         {
             Poolable currentBullet =  Managers.Pool.Pop(bullet);
@@ -83,10 +79,9 @@ public class WeaponManager : MonoBehaviour
         //fire
     }
 
-    void OrbitFire()
+    void OrbitFire(WeaponBased weapon)
     {
         Debug.Log("Orbit Fire");
-        _fireRateTimer = 0;
         barrelPos.LookAt(_aim._aimPos);
 
         CheckFireTime();
@@ -96,16 +91,15 @@ public class WeaponManager : MonoBehaviour
         _actionState._anim.SetInteger("ComboCount", _comboCount % _maxComboCount);
         _actionState._anim.SetTrigger("Fire");
 
-        _ammo._currentAmmo--;
         for (int i = 0; i < bulletPerShot; i++)
         {
-            Poolable currentBullet = Managers.Pool.Pop(bullet);
+            Poolable currentBullet = Managers.Pool.Pop(_currentWeapon._bullet);
             currentBullet.transform.position = barrelPos.position;
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
             rb.useGravity = true;
             rb.velocity = Vector3.zero;
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
-            _weaponOrbit.fireOrbit();
+            _currentWeapon.OrbitFire(weapon);
         }
     }
 
