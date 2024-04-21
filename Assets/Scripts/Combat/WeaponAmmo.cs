@@ -20,8 +20,7 @@ public class WeaponAmmo : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) {
-            Reload();
-            _reloadAction.Invoke();
+            //Reload();
         }
     }
 

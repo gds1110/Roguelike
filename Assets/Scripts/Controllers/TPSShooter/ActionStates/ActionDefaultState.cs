@@ -16,6 +16,11 @@ public class ActionDefaultState : ActionBaseState
             actions.SwitchState(actions._reloadState);
             Managers.Sound.Play("Reload");
         }
+        if(Input.GetKeyDown(KeyCode.T)&&CanSwitch(actions))
+        {
+            actions.SwitchState(actions._switchState);
+            Managers.Sound.Play("Reload");
+        }
     }
 
     bool CanReload(ActionStateManager actions)
@@ -26,5 +31,10 @@ public class ActionDefaultState : ActionBaseState
         else if (actions._ammo._extraAmmo == 0) return false;
         else return true;
 
+    }
+    bool CanSwitch(ActionStateManager actions)
+    {
+
+        return true;
     }
 }

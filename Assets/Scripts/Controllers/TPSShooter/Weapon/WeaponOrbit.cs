@@ -33,6 +33,11 @@ public class WeaponOrbit : MonoBehaviour
     }
     public void ResetOrbit()
     {
+        for(int i=0;i<_Bullets.Count;i++)
+        {
+            Managers.Pool.Push(_Bullets[i].GetComponent<Poolable>());
+        }
+
         _Bullets.Clear();
         _viewBullets.Clear();
         _offBullets.Clear();
@@ -42,6 +47,19 @@ public class WeaponOrbit : MonoBehaviour
         _currentBullet = weapon._bullet;
         ResetOrbit();
         InitOrbit();
+    }
+
+    public void ChangedOrbit(WeaponBased weapon)
+    {
+        _currentBullet = weapon._bullet;
+        ResetOrbit();
+        InitOrbit();
+        _currentNumberOrbit = weapon._currentAmmo;
+        int offOrbit = weapon._ammoSize - weapon._currentAmmo;
+        for(int i=0;i<offOrbit; i++)
+        {
+            fireOrbit();
+        }
     }
 
 

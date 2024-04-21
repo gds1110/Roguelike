@@ -10,6 +10,8 @@ public class ActionStateManager : MonoBehaviour
 
     public ActionReloadState _reloadState = new ActionReloadState();
     public ActionDefaultState _defaultState = new ActionDefaultState();
+    //switch weapon
+    public ActionSwitchState _switchState = new ActionSwitchState();
 
     public GameObject _currentWeapon;
     public WeaponAmmo _ammo;
@@ -34,9 +36,20 @@ public class ActionStateManager : MonoBehaviour
         _currentState = state;
         _currentState.EnterState(this);
     }
+
+    // add to event at magicReload animation 
     public void WeaponReloaded()
     {
         _ammo.Reload();
+        _ammo._reloadAction.Invoke();
+        SwitchState(_defaultState);
+    }
+
+    // add to event at SwitchMagic animation 
+    public void SwitchWeapon()
+    {
+        WeaponManager wm = GetComponent<WeaponManager>();
+        if(wm) wm.SwitchWeapon();
         SwitchState(_defaultState);
     }
 }

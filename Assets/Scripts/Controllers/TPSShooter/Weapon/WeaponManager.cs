@@ -15,6 +15,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] int bulletPerShot;
 
     public WeaponBased _currentWeapon;
+    public WeaponBased _spareWeapon;
     public FireWeapon _fireWeapon;
     public IceWeapon _iceWeapon;
 
@@ -27,6 +28,10 @@ public class WeaponManager : MonoBehaviour
     public float _lastClickedTime = 0;
     public int _comboCount = 0;
     public int _maxComboCount = 3;
+
+    public Action<WeaponBased> _AchangeWeapon;
+    public Action<WeaponBased> _AshootWeapon;
+    
     void Start()
     {
 
@@ -35,10 +40,12 @@ public class WeaponManager : MonoBehaviour
         _fireWeapon = GetComponentInChildren<FireWeapon>();
         _iceWeapon = GetComponentInChildren<IceWeapon>();
         _currentWeapon = _iceWeapon;
+        _spareWeapon = _fireWeapon;
         _comboCount = 0;
         _maxComboCount = 3;
 
         _currentWeapon.WeaponInit();
+        Managers.Game.HUDInit();
     }
 
     // Update is called once per frame
@@ -49,7 +56,14 @@ public class WeaponManager : MonoBehaviour
         {
             return;
         }
-        if (ShouldFire(_currentWeapon)) OrbitFire(_currentWeapon);
+        if (ShouldFire(_currentWeapon))
+        {
+            OrbitFire(_currentWeapon);
+            if (_AshootWeapon != null)
+            {
+                _AshootWeapon.Invoke(_currentWeapon);
+            }
+        }
     }
 
     bool ShouldFire(WeaponBased weapon)
@@ -60,7 +74,25 @@ public class WeaponManager : MonoBehaviour
     }
 
 
-    
+    public void SwitchWeapon()
+    {
+        if (_AchangeWeapon == null)
+        {
+            return;
+        }
+
+        if (_currentWeapon is FireWeapon)
+        {
+           _AchangeWeapon.Invoke(_iceWeapon);
+            _currentWeapon = _iceWeapon;
+        }
+        else if(_currentWeapon is IceWeapon)
+        {
+           _AchangeWeapon.Invoke(_fireWeapon);
+            _currentWeapon = _fireWeapon;
+        }
+        _currentWeapon._weaponOrbit.ChangedOrbit(_currentWeapon);
+    }
     void Fire()
     {
         _currentWeapon._fireRateTimer = 0;

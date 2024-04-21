@@ -35,7 +35,7 @@ public abstract class WeaponBased : MonoBehaviour
     {
         _ammo._clipSize = _ammoSize;
         _ammo._currentAmmo = _currentAmmo;
-        _weaponOrbit.InitOrbit(this);
+        _weaponOrbit.ChangedOrbit(this);
 
     }
 

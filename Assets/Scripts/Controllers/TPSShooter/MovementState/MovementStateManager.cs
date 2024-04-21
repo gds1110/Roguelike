@@ -31,6 +31,10 @@ public class MovementStateManager : MonoBehaviour
 
     [HideInInspector] public Animator _anim;
 
+    private void Awake()
+    {
+        Managers.Game.SetPlayer(this.gameObject);
+    }
 
     void Start()
     {
@@ -42,7 +46,7 @@ public class MovementStateManager : MonoBehaviour
         _RunBackSpeed = 5;
         SwitchState(_Idle);
 
-        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+       // Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
 
     // Update is called once per frame
