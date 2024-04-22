@@ -17,14 +17,15 @@ public class HUD_WeaponUI : UI_Base
     public WeaponManager wm;
     public override void Init()
     {
-
-        wm = Managers.Game.GetPlayer().GetComponent<WeaponManager>();
+        Bind<GameObject>(typeof(GameObjects));
         if (wm)
         {
             wm._AshootWeapon -= FiredAmmo;
             wm._AshootWeapon += FiredAmmo;
             wm._AchangeWeapon -= ChangeWeaponData;
             wm._AchangeWeapon += ChangeWeaponData;
+            wm._AreloadWeapon -= AmmoRefresh;
+            wm._AreloadWeapon += AmmoRefresh;
 
             _currentWeapon = wm._currentWeapon;
             Get<GameObject>((int)GameObjects.CurrentWeaponImg).GetComponent<Image>().sprite = wm._currentWeapon._weaponImage;
@@ -39,31 +40,9 @@ public class HUD_WeaponUI : UI_Base
     public void SetWeaponManager(WeaponManager weaponManager)
     {
         wm = weaponManager;
-        if (wm)
-        {
-            wm._AshootWeapon -= FiredAmmo;
-            wm._AshootWeapon += FiredAmmo;
-            wm._AchangeWeapon -= ChangeWeaponData;
-            wm._AchangeWeapon += ChangeWeaponData;
-
-            _currentWeapon = wm._currentWeapon;
-            GetImage((int)GameObjects.CurrentWeaponImg).sprite = wm._currentWeapon._weaponImage;
-            GetImage((int)GameObjects.SpareWeaponImg).sprite = wm._spareWeapon._weaponImage;
-            GetText((int)GameObjects.AmmoText).text = $"{_currentWeapon._currentAmmo} / {_currentWeapon._ammoSize}";
-        }
-        else
-        {
-            Debug.Log("No WeaponManager");
-        }
+        Init();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //   Init();
-
-        Bind<GameObject>(typeof(GameObjects));
-    }
 
     // Update is called once per frame
     void Update()
@@ -76,7 +55,8 @@ public class HUD_WeaponUI : UI_Base
     void ChangeWeaponData(WeaponBased changeWeapon)
     {
 
-        StartCoroutine(RotateImg(0.5f)); 
+        // StartCoroutine(RotateImg(0.2f)); 
+        Debug.Log("WeaponChangeData");
         if (_currentWeapon)
         {
             Get<GameObject>((int)GameObjects.SpareWeaponImg).GetComponent<Image>().sprite = _currentWeapon._weaponImage;
@@ -89,6 +69,11 @@ public class HUD_WeaponUI : UI_Base
     void FiredAmmo(WeaponBased currentWeapon)
     {
         Get<GameObject>((int)GameObjects.AmmoText).GetComponent<Text>().text = $"{currentWeapon._currentAmmo} / {currentWeapon._ammoSize}";
+    }
+
+    void AmmoRefresh()
+    {
+        Get<GameObject>((int)GameObjects.AmmoText).GetComponent<Text>().text = $"{_currentWeapon._currentAmmo} / {_currentWeapon._ammoSize}";
     }
 
     IEnumerator RotateImg(float duration)

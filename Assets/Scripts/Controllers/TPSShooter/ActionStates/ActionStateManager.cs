@@ -13,16 +13,19 @@ public class ActionStateManager : MonoBehaviour
     //switch weapon
     public ActionSwitchState _switchState = new ActionSwitchState();
 
-    public GameObject _currentWeapon;
-    public WeaponAmmo _ammo;
+    public WeaponBased _currentWeapon;
+  
 
     [HideInInspector] public Animator _anim;
 
     void Start()
     {
         SwitchState(_defaultState);
-        _ammo = _currentWeapon.GetComponent<WeaponAmmo>();  
+     
         _anim = GetComponent<Animator>();
+        WeaponManager wm = GetComponent<WeaponManager>();
+        _currentWeapon = wm._currentWeapon;
+
     }
 
     // Update is called once per frame
@@ -40,8 +43,10 @@ public class ActionStateManager : MonoBehaviour
     // add to event at magicReload animation 
     public void WeaponReloaded()
     {
-        _ammo.Reload();
-        _ammo._reloadAction.Invoke();
+     
+        WeaponManager wm = GetComponent<WeaponManager>();
+        wm._currentWeapon.Reload();
+        wm._AreloadWeapon?.Invoke();
         SwitchState(_defaultState);
     }
 
@@ -49,7 +54,7 @@ public class ActionStateManager : MonoBehaviour
     public void SwitchWeapon()
     {
         WeaponManager wm = GetComponent<WeaponManager>();
-        if(wm) wm.SwitchWeapon();
         SwitchState(_defaultState);
+        _currentWeapon = wm._currentWeapon;
     }
 }

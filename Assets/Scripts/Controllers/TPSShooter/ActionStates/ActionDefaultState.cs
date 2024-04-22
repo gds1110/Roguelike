@@ -25,10 +25,8 @@ public class ActionDefaultState : ActionBaseState
 
     bool CanReload(ActionStateManager actions)
     {
-
-        if (actions._ammo._isUnlimit == true) return true;
-        if (actions._ammo._currentAmmo == actions._ammo._clipSize) return false;
-        else if (actions._ammo._extraAmmo == 0) return false;
+ 
+        if (actions._currentWeapon._currentAmmo == actions._currentWeapon._ammoSize) return false;
         else return true;
 
     }

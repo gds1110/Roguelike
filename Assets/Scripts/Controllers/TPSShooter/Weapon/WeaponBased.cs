@@ -16,7 +16,6 @@ public abstract class WeaponBased : MonoBehaviour
     public GameObject _bullet;
     public int _bulletDamage = 10;
 
-    public WeaponAmmo _ammo;
     public WeaponOrbit _weaponOrbit;
 
     public int _ammoSize;
@@ -25,16 +24,24 @@ public abstract class WeaponBased : MonoBehaviour
     public Sprite _weaponImage;
     protected virtual void Start()
     {
-        _ammo = Util.GetOrAddComponent<WeaponAmmo>(this.gameObject);
         _weaponOrbit = Util.GetOrAddComponent<WeaponOrbit>(gameObject);
         _fireRateTimer = _fireRate;
         _currentAmmo = _ammoSize;
     }
 
+    protected virtual void Update()
+    {
+        
+    }
+
+    public virtual void Reload()
+    {
+        _currentAmmo = _ammoSize;
+        _weaponOrbit.ReloadOrbit();
+    }
+
     public virtual void WeaponInit()
     {
-        _ammo._clipSize = _ammoSize;
-        _ammo._currentAmmo = _currentAmmo;
         _weaponOrbit.ChangedOrbit(this);
 
     }
@@ -43,7 +50,7 @@ public abstract class WeaponBased : MonoBehaviour
     {
         _fireRateTimer += Time.deltaTime;
         if (_fireRateTimer < _fireRate) return false;
-        if (_ammo._currentAmmo == 0)
+        if (_currentAmmo == 0)
         {
             return false;
         }
@@ -56,7 +63,7 @@ public abstract class WeaponBased : MonoBehaviour
     {
         _fireRateTimer = 0;
         Managers.Sound.Play("ShootAudio", Define.Sound.Effect, 1.5f);
-        _ammo._currentAmmo--;
+        _currentAmmo--;
         _weaponOrbit.fireOrbit();
     }
 }

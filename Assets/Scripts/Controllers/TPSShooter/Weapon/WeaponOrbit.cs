@@ -9,7 +9,6 @@ public class WeaponOrbit : MonoBehaviour
     public int _currentNumberOrbit = 5;
     public CharacterController _characterController;
     public WeaponManager _weaponManager;
-    public WeaponAmmo _ammo;
     public float _divideAngle;
     public Queue<GameObject> _viewBullets;
     public Queue<GameObject> _offBullets;
@@ -21,13 +20,11 @@ public class WeaponOrbit : MonoBehaviour
     void Start()
     {
         _characterController = GetComponentInParent<CharacterController>();
-        _ammo = GetComponent<WeaponAmmo>();
         _weaponManager = GetComponentInParent<WeaponManager>();
         _orbitSpeed = 30f;
         _viewBullets = new Queue<GameObject>();
         _offBullets = new Queue<GameObject>();
-        _ammo._reloadAction -= ReloadOrbit;
-        _ammo._reloadAction += ReloadOrbit;
+
     
 
     }
@@ -56,9 +53,10 @@ public class WeaponOrbit : MonoBehaviour
         InitOrbit();
         _currentNumberOrbit = weapon._currentAmmo;
         int offOrbit = weapon._ammoSize - weapon._currentAmmo;
+       
         for(int i=0;i<offOrbit; i++)
         {
-            fireOrbit();
+            OffViewOrbitBullet();
         }
     }
 
@@ -111,12 +109,17 @@ public class WeaponOrbit : MonoBehaviour
         if(_currentNumberOrbit>0&&_viewBullets.Count>0)
         {
             _currentNumberOrbit--;
-            GameObject go = _viewBullets.Dequeue();
-            go.SetActive(false);
-            OrbitBullet orbit = go.gameObject.GetComponent<OrbitBullet>();
-            orbit._isOrbit = false;
-            _offBullets.Enqueue(go);
+            OffViewOrbitBullet();
         }
+    }
+
+    public void OffViewOrbitBullet()
+    {
+        GameObject go = _viewBullets.Dequeue();
+        go.SetActive(false);
+        OrbitBullet orbit = go.gameObject.GetComponent<OrbitBullet>();
+        orbit._isOrbit = false;
+        _offBullets.Enqueue(go);
     }
 
     public Vector3 GetNorm(int num)

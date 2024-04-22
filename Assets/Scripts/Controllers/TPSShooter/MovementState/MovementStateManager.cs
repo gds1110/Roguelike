@@ -24,10 +24,11 @@ public class MovementStateManager : MonoBehaviour
 
 
     MovementBaseState _currentState;
-
+    public MovementBaseState _preState;
     public IdleState _Idle = new IdleState();
     public WalkState _Walk = new WalkState();
     public RunState _Run = new RunState();
+    public DodgeState _Dodge = new DodgeState();
 
     [HideInInspector] public Animator _anim;
 
@@ -46,7 +47,14 @@ public class MovementStateManager : MonoBehaviour
         _RunBackSpeed = 5;
         SwitchState(_Idle);
 
-       // Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        // Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+
+      UI_Base hud_ui = Managers.UI.ShowSceneUI<UI_Scene>("HUD");
+       if(hud_ui.GetComponent<UI_HUD>())
+        {
+            WeaponManager wm = this.GetComponent<WeaponManager>();
+            hud_ui.GetComponent<UI_HUD>().InitWeaponUI(wm);
+        }
     }
 
     // Update is called once per frame
@@ -63,6 +71,10 @@ public class MovementStateManager : MonoBehaviour
 
     public void SwitchState(MovementBaseState state)
     {
+        if (_currentState != null)
+        {
+            _preState = _currentState;
+        }
         _currentState = state;
         _currentState.EnterState(this);
     }
@@ -73,7 +85,11 @@ public class MovementStateManager : MonoBehaviour
         _vInput = Input.GetAxis("Vertical");
 
         _dir = transform.forward * _vInput + transform.right * _hzInput;
-    
+        if(_currentState==_Dodge)
+        {
+            _dir = _Dodge._dir;
+        }
+
         _characterController.Move(_dir * _currentMoveSpeed * Time.deltaTime);
 
     }
@@ -91,6 +107,8 @@ public class MovementStateManager : MonoBehaviour
 
         _characterController.Move(_velocity * Time.deltaTime);
     }
+
+
 
     private void OnDrawGizmos()
     {

@@ -8,12 +8,6 @@ public class GameManager
    // Dictionary<int, GameObject> _monsters = new Dictionary<int, GameObject>();
    HashSet<GameObject> _monsters= new HashSet<GameObject>();
 
-    public UI_HUD _ui_HUD;
-
-    public void HUDInit()
-    {
-        _ui_HUD.Init();
-    }
 
     public GameObject Spawn(Define.WorldObject type,string path,Transform parent = null)
     {

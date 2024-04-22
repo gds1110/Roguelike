@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 7855404539263151025}
   - component: {fileID: 3474612848945617512}
   - component: {fileID: 6640033125505978916}
+  - component: {fileID: 6488992870897227851}
   m_Layer: 7
   m_Name: '@Player _ver3'
   m_TagString: Untagged
@@ -218,7 +219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4789441380268266384}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.008077768, z: -0, w: 0.99996746}
+  m_LocalRotation: {x: 0, y: -0.008080836, z: 0, w: 0.99996734}
   m_LocalPosition: {x: 65.69, y: 4.9308968, z: 63.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -386,11 +387,32 @@ MonoBehaviour:
   bulletVelocity: 100
   bulletPerShot: 1
   _currentWeapon: {fileID: 0}
+  _spareWeapon: {fileID: 0}
   _fireWeapon: {fileID: 0}
   _iceWeapon: {fileID: 0}
   _lastClickedTime: 0
   _comboCount: 0
   _maxComboCount: 0
+--- !u!114 &6488992870897227851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789441380268266384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a025b8e46e1014996159662fd47c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 0
+  _hp: 0
+  _maxHp: 0
+  _attack: 0
+  _defense: 0
+  _moveSpeed: 0
+  _exp: 0
+  _gold: 0
 --- !u!1 &4897187076652209949
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +453,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4820942994659591874}
-  - component: {fileID: 8872077065999732822}
   - component: {fileID: 3108560840736584173}
   - component: {fileID: 7370389257719628293}
   - component: {fileID: 8048317313063996854}
@@ -457,22 +478,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2716140733204842565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8872077065999732822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5474388723288571879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6589d17ee7b294b46a5f8eb235ed4635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _clipSize: 10
-  _extraAmmo: 0
-  _currentAmmo: 10
-  _isUnlimit: 1
 --- !u!114 &3108560840736584173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,13 +514,13 @@ MonoBehaviour:
   _fireRate: 0
   _semiAuto: 0
   _fireRateTimer: 0
-  _bullet: {fileID: 0}
+  _bullet: {fileID: 7624496878921423553, guid: ef58e65c372e0144d85346d0933580da, type: 3}
   _bulletDamage: 10
   _ammo: {fileID: 0}
   _weaponOrbit: {fileID: 0}
-  _ammoSize: 0
+  _ammoSize: 10
   _currentAmmo: 0
-  _weaponImage: {fileID: 0}
+  _weaponImage: {fileID: 1401011104, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
 --- !u!114 &8048317313063996854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,13 +536,13 @@ MonoBehaviour:
   _fireRate: 0
   _semiAuto: 0
   _fireRateTimer: 0
-  _bullet: {fileID: 0}
+  _bullet: {fileID: 6830094554140918210, guid: 6d374bee9e3a6784e96bf6c442277d59, type: 3}
   _bulletDamage: 10
   _ammo: {fileID: 0}
   _weaponOrbit: {fileID: 0}
-  _ammoSize: 0
+  _ammoSize: 5
   _currentAmmo: 0
-  _weaponImage: {fileID: 0}
+  _weaponImage: {fileID: 695775810, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
 --- !u!1 &7217915159630497361
 GameObject:
   m_ObjectHideFlags: 0

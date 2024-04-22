@@ -31,7 +31,8 @@ public class WeaponManager : MonoBehaviour
 
     public Action<WeaponBased> _AchangeWeapon;
     public Action<WeaponBased> _AshootWeapon;
-    
+    public Action _AreloadWeapon;
+
     void Start()
     {
 
@@ -45,7 +46,6 @@ public class WeaponManager : MonoBehaviour
         _maxComboCount = 3;
 
         _currentWeapon.WeaponInit();
-        Managers.Game.HUDInit();
     }
 
     // Update is called once per frame
@@ -98,7 +98,7 @@ public class WeaponManager : MonoBehaviour
         _currentWeapon._fireRateTimer = 0;
         barrelPos.LookAt(_aim._aimPos);
         Managers.Sound.Play("ShootAudio",Define.Sound.Effect,1.5f);
-        _currentWeapon._ammo._currentAmmo--;
+        _currentWeapon._currentAmmo--;
         for(int i=0;i<bulletPerShot;i++)
         {
             Poolable currentBullet =  Managers.Pool.Pop(bullet);
