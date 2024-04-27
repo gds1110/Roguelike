@@ -46,10 +46,9 @@ public class MovementStateManager : MonoBehaviour
         _RunSpeed = 7;
         _RunBackSpeed = 5;
         SwitchState(_Idle);
-
         // Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
-      UI_Base hud_ui = Managers.UI.ShowSceneUI<UI_Scene>("HUD");
+        UI_Base hud_ui = Managers.UI.ShowSceneUI<UI_Scene>("HUD");
        if(hud_ui.GetComponent<UI_HUD>())
         {
             WeaponManager wm = this.GetComponent<WeaponManager>();

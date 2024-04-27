@@ -7,6 +7,7 @@ public class ActionReloadState : ActionBaseState
     public override void EnterState(ActionStateManager actions)
     {
         actions._anim.SetTrigger("Reload");
+        actions._beingAction = true;
     }
 
     public override void UpdateState(ActionStateManager actions)

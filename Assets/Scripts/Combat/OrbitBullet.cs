@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -10,6 +11,11 @@ public class OrbitBullet : MonoBehaviour
     Vector3 _offSet;
     public bool _isOrbit = false;
     Vector3 _normalize;
+
+    private void Start()
+    {
+    }
+
     void Update()
     {
         if(_isOrbit==false)
@@ -32,6 +38,7 @@ public class OrbitBullet : MonoBehaviour
         _isOrbit = true;
         _orbitSpeed = orbitSpeed;
         _target = target;
+
     }
     public void SetOffset(Vector3 offset,Transform target)
     {

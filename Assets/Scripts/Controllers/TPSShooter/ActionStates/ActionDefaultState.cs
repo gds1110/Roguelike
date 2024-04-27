@@ -6,6 +6,7 @@ public class ActionDefaultState : ActionBaseState
 {
     public override void EnterState(ActionStateManager actions)
     {
+        actions._beingAction = false;
     }
 
     public override void UpdateState(ActionStateManager actions)
@@ -16,7 +17,7 @@ public class ActionDefaultState : ActionBaseState
             actions.SwitchState(actions._reloadState);
             Managers.Sound.Play("Reload");
         }
-        if(Input.GetKeyDown(KeyCode.T)&&CanSwitch(actions))
+        else if(Input.GetKeyDown(KeyCode.T)&&CanSwitch(actions))
         {
             actions.SwitchState(actions._switchState);
             Managers.Sound.Play("Reload");
@@ -27,12 +28,13 @@ public class ActionDefaultState : ActionBaseState
     {
  
         if (actions._currentWeapon._currentAmmo == actions._currentWeapon._ammoSize) return false;
+        if (actions._beingAction == true) return false;
         else return true;
 
     }
     bool CanSwitch(ActionStateManager actions)
     {
-
+        if (actions._beingAction == true) return false;
         return true;
     }
 }

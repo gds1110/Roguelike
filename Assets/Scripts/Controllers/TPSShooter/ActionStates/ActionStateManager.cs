@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ActionStateManager : MonoBehaviour
 {
-
+   
     public ActionBaseState _currentState;
 
     public ActionReloadState _reloadState = new ActionReloadState();
@@ -14,8 +14,9 @@ public class ActionStateManager : MonoBehaviour
     public ActionSwitchState _switchState = new ActionSwitchState();
 
     public WeaponBased _currentWeapon;
-  
 
+    public bool _beingAction = false;
+    WeaponManager wm;
     [HideInInspector] public Animator _anim;
 
     void Start()
@@ -23,15 +24,19 @@ public class ActionStateManager : MonoBehaviour
         SwitchState(_defaultState);
      
         _anim = GetComponent<Animator>();
-        WeaponManager wm = GetComponent<WeaponManager>();
+         wm = GetComponent<WeaponManager>();
         _currentWeapon = wm._currentWeapon;
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         _currentState.UpdateState(this);
+        if(wm._currentWeapon !=_currentWeapon)
+        {
+            _currentWeapon = wm._currentWeapon;
+        }
     }
 
     public void SwitchState(ActionBaseState state)
@@ -55,6 +60,6 @@ public class ActionStateManager : MonoBehaviour
     {
         WeaponManager wm = GetComponent<WeaponManager>();
         SwitchState(_defaultState);
-        _currentWeapon = wm._currentWeapon;
+      
     }
 }

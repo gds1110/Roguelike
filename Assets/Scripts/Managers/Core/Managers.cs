@@ -9,7 +9,9 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } }
     #region Contents
     GameManager _game = new GameManager();
+    EffectManager _effect = new EffectManager();
     public static GameManager Game { get { return Instance._game; } }
+    public static EffectManager Effect { get {  return Instance._effect; } }
     #endregion
     #region Core
     DataManager _dataManager = new DataManager();
@@ -34,7 +36,8 @@ public class Managers : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     // Update is called once per frame

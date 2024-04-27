@@ -10,6 +10,9 @@ public class PlayerStat : Stat
     [SerializeField]
     protected int _gold;
 
+
+    bool _isDamage;
+
     public int Exp 
     { get { return _exp; } 
         set { 
@@ -58,13 +61,42 @@ public class PlayerStat : Stat
         _attack =stat.attack;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag=="EnemyBullet")
+        {
+            Debug.Log("attacked");
+            if(_isDamage)
+               StartCoroutine(OnDamage());
+        }
+    }
+
+    IEnumerator OnDamage()
+    {
+        _isDamage = true;
+
+        yield return new WaitForSeconds(1f);
+
+        _isDamage = false;
+    }
+    void NuckBack()
+    {
+
+    }
+
+    IEnumerator Knockback()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();  
+        rb.AddForce(transform.forward*-25,ForceMode.Impulse);
+        yield return new WaitForSeconds(1f);
+
+        rb.velocity = Vector3.zero;
+    }
+
     protected override void OnDead(Stat attacker)
     {
-        PlayerStat playerStat = attacker as PlayerStat;
-        if(playerStat != null)
-        {
-            playerStat.Exp += _exp;
-        }
+        
+        
 
 
     }

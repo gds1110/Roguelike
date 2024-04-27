@@ -49,4 +49,9 @@ public class Define
         QuarterView,
         ThirdPersonView
     }
+
+    public enum EffectType
+    {
+        Default,
+    }
 }
