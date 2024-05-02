@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class PlayerStat : Stat
 {
     [SerializeField]
-    protected int _exp;
+    protected int _exp;  
+
     [SerializeField]
     protected int _gold;
 
@@ -39,6 +41,16 @@ public class PlayerStat : Stat
     }
     public int Gold { get { return _gold; } set { _gold = value; } }
 
+    public int GetTotalExp()
+    {
+        Data.Stat stat;
+        if (Managers.Data.StatDict.TryGetValue(Level + 1, out stat) == true)
+        {
+            return stat.totalExp;
+        }
+
+        return 0;
+    }
 
     private void Start()
     {
@@ -48,7 +60,9 @@ public class PlayerStat : Stat
         _defense = 5;
         _exp = 0;
         _gold = 0;
-
+        _isDamage = false;
+        type = Define.WorldObject.Player;
+        Managers.Game.SetPlayer(this.gameObject);
     }
 
     public void SetStat(int level)
@@ -58,18 +72,22 @@ public class PlayerStat : Stat
         
         _hp = stat.maxHp;
         _maxHp =stat.maxHp;
+        
         _attack =stat.attack;
+        
+        GetComponent<WeaponManager>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void TakeDamage(Stat attacker, BaseCombat combat)
     {
-        if(other.tag=="EnemyBullet")
+        
+        if (_isDamage == false)
         {
-            Debug.Log("attacked");
-            if(_isDamage)
-               StartCoroutine(OnDamage());
+            base.TakeDamage(attacker, combat);
         }
+        StartCoroutine(OnDamage());
     }
+
 
     IEnumerator OnDamage()
     {
@@ -79,24 +97,13 @@ public class PlayerStat : Stat
 
         _isDamage = false;
     }
-    void NuckBack()
-    {
-
-    }
-
-    IEnumerator Knockback()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();  
-        rb.AddForce(transform.forward*-25,ForceMode.Impulse);
-        yield return new WaitForSeconds(1f);
-
-        rb.velocity = Vector3.zero;
-    }
+  
 
     protected override void OnDead(Stat attacker)
     {
-        
-        
+        Managers.Game.GameOver();
+
+
 
 
     }

@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - Ground
   - Wall
+  - InteractProp
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Projectile
   - Wall
   - EnemyBullet
-  - 
+  - InteractProp
   - 
   - 
   - 

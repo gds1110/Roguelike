@@ -33,6 +33,7 @@ public class WeaponManager : MonoBehaviour
     public Action<WeaponBased> _AshootWeapon;
     public Action _AreloadWeapon;
 
+    public bool _shotSound = false;
     void Start()
     {
 
@@ -70,6 +71,7 @@ public class WeaponManager : MonoBehaviour
     bool ShouldFire(WeaponBased weapon)
     {
         if (_actionState._currentState == _actionState._reloadState) return false;
+        if (_actionState._currentState == _actionState._switchState) return false;
 
         return _currentWeapon.ShouldFire(weapon);
     }
@@ -121,8 +123,11 @@ public class WeaponManager : MonoBehaviour
         barrelPos.LookAt(_aim._aimPos);
 
         CheckFireTime();
-        Managers.Sound.Play("ShootAudio", Define.Sound.Effect, 1.5f);
-
+        if (_shotSound == false)
+        {
+            Managers.Sound.Play("ShootAudio", Define.Sound.Effect, 1.5f);
+            StartCoroutine(ShotSoundDelay());    
+        }
         _comboCount++;
         _actionState._anim.SetInteger("ComboCount", _comboCount % _maxComboCount);
         _actionState._anim.SetTrigger("Fire");
@@ -130,13 +135,24 @@ public class WeaponManager : MonoBehaviour
         for (int i = 0; i < bulletPerShot; i++)
         {
             Poolable currentBullet = Managers.Pool.Pop(_currentWeapon._bullet);
+            Projectile projectile = currentBullet.GetComponent<Projectile>();
+            projectile.SetCombat(_currentWeapon.baseCombat);
+            projectile.SetOwner(GetComponent<Stat>());
             currentBullet.transform.position = barrelPos.position;
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
             rb.useGravity = true;
             rb.velocity = Vector3.zero;
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
-            _currentWeapon.OrbitFire(weapon);
         }
+            _currentWeapon.OrbitFire(weapon);
+    }
+
+    IEnumerator ShotSoundDelay()
+    {
+        _shotSound = true;
+       yield return new WaitForSeconds(0.5f);
+        _shotSound = false;
+
     }
 
     void CheckFireTime()
@@ -147,5 +163,11 @@ public class WeaponManager : MonoBehaviour
         }
 
         _lastClickedTime = Time.time; 
+    }
+
+    public void LevelUp(int level)
+    {
+
+   
     }
 }

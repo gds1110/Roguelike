@@ -34,6 +34,10 @@ public class EnemyBoss : Enemy
     void Start()
     {
         StartCoroutine(Think());
+
+        _stat = GetComponent<EnemyStat>();
+
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(this.transform).Init();
     }
 
     // Update is called once per frame
@@ -90,13 +94,16 @@ public class EnemyBoss : Enemy
         yield return new WaitForSeconds(0.2f);
         GameObject instantMissileA = Instantiate(_missile,_missilePortA.position, _missilePortA.rotation); 
         BossMissile bma = instantMissileA.GetComponent<BossMissile>();
+        bma.SetCombatOwner(_stat, _combat);
         bma._target = _target;
+        Destroy(instantMissileA, 5f);
 
         yield return new WaitForSeconds(0.3f);
         GameObject instantMissileB = Instantiate(_missile, _missilePortB.position, _missilePortB.rotation);
         BossMissile bmb = instantMissileB.GetComponent<BossMissile>();
+        bmb.SetCombatOwner(_stat, _combat);
         bmb._target = _target;
-
+        Destroy(instantMissileB, 5f);
         yield return new WaitForSeconds(2f);
 
 
@@ -107,8 +114,12 @@ public class EnemyBoss : Enemy
     {
         _isLook = false;
         _anim.SetTrigger("doBigShot");
-        Instantiate(_bullet, transform.position, transform.rotation);
+        GameObject rock = Instantiate(_bullet, transform.position, transform.rotation);
+        BossRock bossRock = rock.GetComponent<BossRock>();
+        bossRock.SetCombatOwner(_stat, _combat);
         yield return new WaitForSeconds(3f);
+        Destroy(rock, 5f);
+
         _isLook = true;
         StartCoroutine(Think());
 

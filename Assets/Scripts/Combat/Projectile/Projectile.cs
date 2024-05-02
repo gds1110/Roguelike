@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     public bool _isPassive = false;
     public bool _isOrbit = false;
     public GameObject _explosionEffect;
+    public BaseCombat _combat;
+    public Stat _owner;
 
     public bool _isRotating = false;
     void Start()
@@ -18,41 +20,47 @@ public class Projectile : MonoBehaviour
       Init();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (_orbit != null)
-        {
-            if (_orbit._isOrbit == true)
-            {
-                return;
-            }
-        }
-        if (other.gameObject.layer == (1<<6) || other.gameObject.layer ==(1<<9))
-        {
-            Debug.Log("BulletHit");
-            _poolable.gameObject.transform.position = Vector3.zero;
-
-            if (_explosionEffect != null)
-            {
-
-                _explosionEffect.SetActive(true);
-            }
-        }
-       
-        Invoke("BackPool", 0.1f);
-    }
 
     protected virtual void Init()
     {
        
         _poolable = gameObject.GetComponent<Poolable>();
         _orbit = gameObject.GetComponent<OrbitBullet>();
-        if (_explosionEffect!=null)
-        {
-            _explosionEffect.SetActive(false);
-        }
-    }
 
+    }
+    public void SetCombat(BaseCombat combat)
+    {
+        _combat =combat;
+    }
+    public void SetOwner(Stat stat)
+    {
+        _owner = stat;
+    }
+    protected virtual void OnHit(Collider other)
+    {
+        if (_orbit._isOrbit == true)
+        {
+            return;
+        }
+        if (other.gameObject.tag == "Monster" || other.gameObject.layer == (1 << 9))
+        {
+
+            Vector3 norm = Vector3.Normalize(gameObject.transform.position - other.transform.position);
+            Managers.Effect.PlayEffect(this, other.transform.position, norm);
+
+
+            _poolable.gameObject.transform.position = Vector3.zero;
+        }
+
+        Stat targetStat = other.GetComponent<Stat>();
+        if (targetStat)
+        {
+
+            targetStat.TakeDamage(_owner, _combat);
+
+        }
+        Invoke("BackPool", 0.5f);
+    }
     protected void BackPool()
     {
         Managers.Pool.Push(_poolable);

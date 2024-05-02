@@ -12,7 +12,8 @@ public class Enemy : MonoBehaviour
     public enum Type { A,B,C,D}
     public Type _enemyType;
 
-    EnemyStat _stat;
+   public EnemyStat _stat;
+   public BaseCombat _combat;
 
     public Rigidbody _rb;
      public BoxCollider _boxCollider;
@@ -26,8 +27,8 @@ public class Enemy : MonoBehaviour
 
     public BoxCollider _meleeArea;
     public GameObject _bullet;
-
-
+    public GameObject _ExpOrb;
+    public int _score;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -35,6 +36,9 @@ public class Enemy : MonoBehaviour
         _nav = GetComponent<NavMeshAgent>();
         _anim = GetComponentInChildren<Animator>();
         _meshs = GetComponentsInChildren<MeshRenderer>();
+        _stat = GetComponent<EnemyStat>();
+        _combat = new BaseCombat();
+        _combat.Damage = _stat.Attack;
 
         if (_enemyType != Type.D)
         {
@@ -47,6 +51,8 @@ public class Enemy : MonoBehaviour
     {
         _stat = GetComponent<EnemyStat>();
 
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(this.transform).Init();
+
     }
 
     void ChaseStart()
@@ -57,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (_nav.enabled&&_enemyType != Type.D)
+        if (_nav.enabled&&_enemyType != Type.D&&_target!=null)
         {
             _nav.SetDestination(_target.position);
             _nav.isStopped = !_isChase;
@@ -115,15 +121,19 @@ public class Enemy : MonoBehaviour
         {
             case Type.A:
                 yield return new WaitForSeconds(0.2f);
+                transform.LookAt(_target.position);
                 _meleeArea.enabled = true;
+                _meleeArea.GetComponent<EnemyProjectile>().SetCombatOwner(_stat, _combat);
                 yield return new WaitForSeconds(1f);
                 _meleeArea.enabled = false;
                 yield return new WaitForSeconds(1f);
                 break;
             case Type.B:
                 yield return new WaitForSeconds(0.1f);
+                transform.LookAt(_target.position);
                 _rb.AddForce(transform.forward * 20, ForceMode.Impulse);
                 _meleeArea.enabled = true;
+                _meleeArea.GetComponent<EnemyProjectile>().SetCombatOwner(_stat, _combat);
                 yield return new WaitForSeconds(0.5f);
                 _rb.velocity= Vector3.zero;
                 _meleeArea.enabled = false;
@@ -131,7 +141,9 @@ public class Enemy : MonoBehaviour
                 break;
             case Type.C:
                 yield return new WaitForSeconds(0.5f);
-                GameObject InstantBullet = Instantiate(_bullet, transform.position, transform.rotation); ;
+                transform.LookAt(_target.position);
+                GameObject InstantBullet = Instantiate(_bullet, transform.position, transform.rotation);
+                InstantBullet.GetComponent<EnemyProjectile>().SetCombatOwner(_stat, _combat);
                 Rigidbody rbBullet = InstantBullet.GetComponent<Rigidbody>();
                 rbBullet.velocity = transform.forward * 20;
                 yield return new WaitForSeconds(2f);
@@ -155,21 +167,18 @@ public class Enemy : MonoBehaviour
           FreezeVelocity();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnAttacked()
     {
-        if (other.tag == "Projectile")
-        {
-            StartCoroutine(OnDamage());
-        }
+        StartCoroutine(OnDamage());
     }
 
-    IEnumerator OnDamage()
+    public IEnumerator OnDamage()
     {
         foreach(MeshRenderer mesh in _meshs)
         {
             mesh.material.color = Color.red;
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         foreach (MeshRenderer mesh in _meshs)
         {
             mesh.material.color = Color.white;
@@ -189,8 +198,10 @@ public class Enemy : MonoBehaviour
         _nav.enabled = false;
         _isChase = false;
         _anim.SetTrigger("doDie");
-
+        Managers.Pool.Pop(_ExpOrb).transform.position = this.gameObject.transform.position+new Vector3(0,1,0);
+        Managers.Game.AddScore(_ExpOrb.GetComponent<Exporb>().exp);
         //TODO
-        //Game Manager Despawn
+        //Game Manager Despawn in stat
+
     }
 }

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 150c3e2ab56126441bfedcd29534fd87
+timeCreated: 1498670537
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/IMG/ParticleMaterials/CircleDistortedGlowBig.mat
+  uploadId: 190620

@@ -51,6 +51,10 @@ public class UIManager
         Canvas canvas = go.GetOrAddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.worldCamera = Camera.main;
+        if(parent!=null)
+        {
+            go.transform.position = parent.transform.position;
+        }
 
         return Util.GetOrAddComponent<T>(go);
 

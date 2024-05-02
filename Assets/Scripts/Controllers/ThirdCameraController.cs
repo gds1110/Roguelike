@@ -32,8 +32,6 @@ public class ThirdCameraController : MonoBehaviour
         _dirNormalized = _realCamera.localPosition.normalized;
         _finalDistance = _realCamera.localPosition.magnitude;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible= false;  
 
     }
 

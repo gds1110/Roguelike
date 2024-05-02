@@ -22,15 +22,27 @@ public class FireProjectile : Projectile
         {
             return;
         }
-        if (other.gameObject.layer == 6 || other.gameObject.layer == 9)
+        Collider[] hitCols = Physics.OverlapSphere(gameObject.transform.position, 2.0f,1<<6);
+        for(int i=0;i<hitCols.Length;i++)
         {
-            _poolable.gameObject.transform.position = Vector3.zero;
-        }
-        if (_explosionEffect != null)
-        {
+            if (hitCols[i].gameObject==other.gameObject)
+            {
+                continue;
+            }
+         
+                Vector3 norm = Vector3.Normalize(gameObject.transform.position - hitCols[i].gameObject.transform.position);
+                Managers.Effect.PlayEffect(this, hitCols[i].gameObject.transform.position, norm);
+          
+            Stat targetStat = hitCols[i].gameObject.GetComponent<Stat>();
+            if (targetStat)
+            {
+                BaseCombat tempcombat = _combat;
+                tempcombat.Damage=_combat.Damage/2;
+                targetStat.TakeDamage(_owner, tempcombat);
 
-            _explosionEffect.SetActive(true);
+            }
         }
-        Invoke("BackPool", 0.1f);
+        OnHit(other);
+
     }
 }

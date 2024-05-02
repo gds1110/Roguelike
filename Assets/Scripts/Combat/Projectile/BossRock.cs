@@ -19,7 +19,32 @@ public class BossRock : EnemyProjectile
         StartCoroutine(GainPowerTimer());
         StartCoroutine(GainPower());
     }
+    private void OnTriggerEnter(Collider other)
+    {
 
+        if (other.tag == "Player")
+        {
+            Stat targetStat = other.GetComponent<Stat>();
+            if (targetStat)
+            {
+                if (_ownerStat == null)
+                {
+                    _ownerStat = GetComponentInParent<Stat>();
+                }
+                BaseCombat baseCombat = new BaseCombat();
+                baseCombat.AttackType = BaseCombat.EAttackType.KnockBack;
+                baseCombat.Damage = 30;
+                targetStat.TakeDamage(_ownerStat, baseCombat);
+
+            }
+            if (_isMeele != true)
+            {
+                _ownerStat = null;
+                Debug.Log("Enemy Bullet Hit");
+                Destroy(gameObject);
+            }
+        }
+    }
     IEnumerator GainPowerTimer()
     {
 

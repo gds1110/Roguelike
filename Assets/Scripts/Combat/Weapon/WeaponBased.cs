@@ -16,6 +16,8 @@ public abstract class WeaponBased : MonoBehaviour
     public GameObject _bullet;
     public int _bulletDamage = 10;
 
+
+    public BaseCombat baseCombat;
     public WeaponOrbit _weaponOrbit;
 
     public int _ammoSize;
@@ -30,12 +32,10 @@ public abstract class WeaponBased : MonoBehaviour
         }
         _fireRateTimer = _fireRate;
         _currentAmmo = _ammoSize;
+        baseCombat = new BaseCombat();
+        baseCombat.Damage = 10;
     }
 
-    protected virtual void Update()
-    {
-        
-    }
 
     public virtual void Reload()
     {
@@ -76,7 +76,7 @@ public abstract class WeaponBased : MonoBehaviour
     public virtual void OrbitFire(WeaponBased weapon)
     {
         _fireRateTimer = 0;
-        Managers.Sound.Play("ShootAudio", Define.Sound.Effect, 1.5f);
+       // Managers.Sound.Play("ShootAudio", Define.Sound.Effect, 1.5f);
         _currentAmmo--;
         _weaponOrbit.fireOrbit();
     }

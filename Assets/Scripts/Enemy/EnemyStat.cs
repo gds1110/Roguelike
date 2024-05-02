@@ -9,6 +9,8 @@ public class EnemyStat : Stat
     void Start()
     {
         _enemy = GetComponent<Enemy>();
+        type = Define.WorldObject.Monster;
+
     }
 
     // Update is called once per frame
@@ -17,14 +19,23 @@ public class EnemyStat : Stat
         
     }
 
-    protected override void OnDead(Stat attacker)
+    public override void TakeDamage(Stat attacker, BaseCombat combat)
     {
-        base.OnDead(attacker);
-        _enemy.OnDead();
+        base.TakeDamage(attacker, combat);
+        if (_enemy)
+            _enemy.OnAttacked();
+
     }
 
-    public override void OnAttacked(Stat attacker)
+    protected override void OnDead(Stat attacker)
     {
-        base.OnAttacked(attacker);
+        if (_enemy)
+        {
+            _enemy.OnDead();
+            _enemy = null;
+        }
+        base.OnDead(attacker);
     }
+
+   
 }

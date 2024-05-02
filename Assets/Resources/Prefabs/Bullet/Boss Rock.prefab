@@ -204,7 +204,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isMeele: 0
   _damage: 0
-  _angularPower: 30
-  _addAngularPower: 0.05
-  _scaleValue: 0.1
-  _addScaleValue: 0.002
+  _ownerStat: {fileID: 0}
+  _angularPower: 40
+  _addAngularPower: 0.3
+  _scaleValue: 0.08
+  _addScaleValue: 0.005

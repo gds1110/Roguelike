@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Stat : MonoBehaviour
@@ -26,6 +27,7 @@ public class Stat : MonoBehaviour
     public int Defense { get { return _defense;}   set    {     _defense = value;        }       }
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
+    public Define.WorldObject type;
 
     private void Start()
     {
@@ -37,26 +39,57 @@ public class Stat : MonoBehaviour
         _moveSpeed = 5.0f;      
     }
 
-    public virtual void OnAttacked(Stat attacker)
+    protected virtual void OnDead(Stat attacker)
     {
-        int damage = Mathf.Max(0, attacker._attack-_defense); ;
+        //PlayerStat playerStat = attacker as PlayerStat;
+        //if(playerStat != null)
+        //{
+        //    playerStat.Exp += 1;
+        //}
+
+        //Managers.Pool.Pop();
+
+        Managers.Game.Despawn(gameObject);
+    }
+    protected virtual void OnDead()
+    {
+        Managers.Game.Despawn(gameObject);
+    }
+    public virtual void TakeDamage(Stat attacker, BaseCombat combat)
+    {
+        int damage = Mathf.Max(0,(attacker._attack+combat.Damage)-_defense);
         _hp -= damage;
         if(_hp <= 0 )
         {
             _hp = 0;
             OnDead(attacker);
         }
-    }
-
-    protected virtual void OnDead(Stat attacker)
-    {
-        PlayerStat playerStat = attacker as PlayerStat;
-        if(playerStat != null)
+        switch (combat.AttackType)
         {
-            playerStat.Exp += 1;
+            case BaseCombat.EAttackType.Normal:
+                break;
+            case BaseCombat.EAttackType.KnockBack:
+                StartCoroutine(Knockback());
+                break;
+            case BaseCombat.EAttackType.Fire:
+                break;
+            case BaseCombat.EAttackType.Ice:
+                break;
+            case BaseCombat.EAttackType.Boom:
+                break;
         }
 
-        Managers.Game.Despawn(gameObject);
+    }
+
+
+
+    public IEnumerator Knockback()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * -25, ForceMode.Impulse);
+        yield return new WaitForSeconds(1f);
+
+        rb.velocity = Vector3.zero;
     }
 }
 

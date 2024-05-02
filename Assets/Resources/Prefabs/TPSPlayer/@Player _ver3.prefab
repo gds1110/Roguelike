@@ -367,8 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc9e2122fbf0a04fb3b508ecc12f698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentWeapon: {fileID: 5474388723288571879}
-  _ammo: {fileID: 0}
+  _currentWeapon: {fileID: 7370389257719628293}
+  _beingAction: 0
   _anim: {fileID: 0}
 --- !u!114 &6640033125505978916
 MonoBehaviour:
@@ -494,7 +494,6 @@ MonoBehaviour:
   _currentNumberOrbit: 5
   _characterController: {fileID: 0}
   _weaponManager: {fileID: 0}
-  _ammo: {fileID: 0}
   _divideAngle: 0
   _Bullets: []
   _currentBullet: {fileID: 0}
@@ -516,7 +515,6 @@ MonoBehaviour:
   _fireRateTimer: 0
   _bullet: {fileID: 7624496878921423553, guid: ef58e65c372e0144d85346d0933580da, type: 3}
   _bulletDamage: 10
-  _ammo: {fileID: 0}
   _weaponOrbit: {fileID: 0}
   _ammoSize: 10
   _currentAmmo: 0
@@ -538,7 +536,6 @@ MonoBehaviour:
   _fireRateTimer: 0
   _bullet: {fileID: 6830094554140918210, guid: 6d374bee9e3a6784e96bf6c442277d59, type: 3}
   _bulletDamage: 10
-  _ammo: {fileID: 0}
   _weaponOrbit: {fileID: 0}
   _ammoSize: 5
   _currentAmmo: 0

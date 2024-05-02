@@ -29,7 +29,8 @@ public class Define
         UnKnown,
         Login,
         Lobby,
-        Game
+        Game,
+        EndingScene
 
     }
     public enum UIEvent

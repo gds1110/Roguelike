@@ -98,7 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385d2cfe7c23abe41a42638cdd9b19c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isRotating: 1
+  _isMeele: 0
+  _damage: 0
+  _ownerStat: {fileID: 0}
 --- !u!1 &2891805637604703471
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +112,7 @@ GameObject:
   - component: {fileID: 1188880446385669236}
   - component: {fileID: 1764593647986570637}
   - component: {fileID: 8656658794279948696}
+  - component: {fileID: 6642268210847951912}
   m_Layer: 10
   m_Name: EnemyMissile
   m_TagString: EnemyBullet
@@ -182,6 +185,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 3}
   m_Center: {x: 0, y: 3, z: 0}
+--- !u!114 &6642268210847951912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891805637604703471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385d2cfe7c23abe41a42638cdd9b19c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isMeele: 0
+  _damage: 0
+  _ownerStat: {fileID: 0}
 --- !u!1 &4998444939668300219
 GameObject:
   m_ObjectHideFlags: 0

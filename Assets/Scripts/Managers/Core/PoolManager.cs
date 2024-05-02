@@ -85,6 +85,7 @@ public class PoolManager
             _root = new GameObject { name = "@Pool_Root" }.transform;
             Object.DontDestroyOnLoad( _root );
         }
+
     }
 
     public void Push(Poolable poolable)
@@ -109,6 +110,8 @@ public class PoolManager
 
         _pool.Add(original.name, pool);
     }
+
+    
 
     public Poolable Pop(GameObject original,Transform parent =null)
     {

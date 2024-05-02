@@ -13,7 +13,9 @@ public class EffectManager
         }
 
         GameObject effect = Object.Instantiate(bullet._explosionEffect,pos,Quaternion.LookRotation(normal));
+        //effect.transform.LookAt(pos - bullet.transform.position);
         //GameObject effect = Object.Instantiate(bullet._explosionEffect,pos,Quaternion.identity);
+        effect.transform.rotation = Camera.main.transform.rotation;
         effect.SetActive(true);
         if(parent != null)
         {

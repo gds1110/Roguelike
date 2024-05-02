@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Physicstest : MonoBehaviour
 {
-    public float radius = 3f; // show penetration into the colliders located inside a sphere of this radius
+    public float radius = 4f; // show penetration into the colliders located inside a sphere of this radius
     public int maxNeighbours = 16; // maximum amount of neighbours visualised
 
     private Collider[] neighbours;

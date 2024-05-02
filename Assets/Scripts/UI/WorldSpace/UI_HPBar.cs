@@ -12,10 +12,7 @@ public class UI_HPBar : UI_Base
     }
     Stat _stat;
 
-    private void Start()
-    {
-        Init();
-    }
+  
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
@@ -25,7 +22,7 @@ public class UI_HPBar : UI_Base
     private void Update()
     {
         Transform parent = transform.parent;
-        transform.position = parent.position + Vector3.up * (parent.GetComponent<Collider>().bounds.size.y);
+        transform.position = parent.position + Vector3.up * (parent.GetComponent<Collider>().bounds.size.y+1);
         transform.rotation = Camera.main.transform.rotation;
         //transform.LookAt(Camera.main.transform);
 

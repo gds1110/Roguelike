@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1e00a4340f4ae8a4b8253da4ffaa7c82
+timeCreated: 1498673202
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/Prefabs/Magic Orb.prefab
+  uploadId: 190620

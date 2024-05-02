@@ -46,20 +46,6 @@ public class ActionStateManager : MonoBehaviour
     }
 
     // add to event at magicReload animation 
-    public void WeaponReloaded()
-    {
-     
-        WeaponManager wm = GetComponent<WeaponManager>();
-        wm._currentWeapon.Reload();
-        wm._AreloadWeapon?.Invoke();
-        SwitchState(_defaultState);
-    }
 
-    // add to event at SwitchMagic animation 
-    public void SwitchWeapon()
-    {
-        WeaponManager wm = GetComponent<WeaponManager>();
-        SwitchState(_defaultState);
-      
-    }
+
 }
