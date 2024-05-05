@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f48591dadc0dc9c41b7b1b93006cb837
+timeCreated: 1498373840
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/IMG/ParticleMaterials/Splash.mat
+  uploadId: 190620

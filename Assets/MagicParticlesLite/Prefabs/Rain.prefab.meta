@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b51ab665c1c1eea41999ec5fb55022fa
+timeCreated: 1498378652
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/Prefabs/Rain.prefab
+  uploadId: 190620

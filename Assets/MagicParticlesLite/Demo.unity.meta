@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 575305f5cc81e214abe99ea56a7cb756
+timeCreated: 1500390866
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/Demo.unity
+  uploadId: 190620

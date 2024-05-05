@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1c2d4eb6f41a2a34aad66b5f89b72d6e
+timeCreated: 1498670242
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/IMG/ParticleMaterials/Cirle.mat
+  uploadId: 190620

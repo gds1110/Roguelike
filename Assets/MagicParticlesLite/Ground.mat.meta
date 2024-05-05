@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 83498a8a523e31a4db76eb01a8b52d27
+timeCreated: 1500390646
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95868
+  packageName: Magic Particle Systems Lite
+  packageVersion: 1.0
+  assetPath: Assets/MagicParticlesLite/Ground.mat
+  uploadId: 190620

@@ -3,18 +3,123 @@
   "stats": [
     {
       "level": "1",
-      "hp": "100",
-      "attack": "10"
+      "maxHp": "200",
+      "attack": "20",
+      "totalExp": "0"
     },
     {
       "level": "2",
-      "hp": "150",
-      "attack": "15"
+      "maxHp": "250",
+      "attack": "25",
+      "totalExp": "10"
     },
     {
       "level": "3",
-      "hp": "200",
-      "attack": "20"
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "20"
+    },
+    {
+      "level": "4",
+      "maxHp": "350",
+      "attack": "30",
+      "totalExp": "30"
+    },
+    {
+      "level": "5",
+      "maxHp": "400",
+      "attack": "30",
+      "totalExp": "40"
+    },
+    {
+      "level": "6",
+      "maxHp": "400",
+      "attack": "30",
+      "totalExp": "50"
+    },
+    {
+      "level": "7",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "60"
+    },
+    {
+      "level": "8",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "70"
+    },
+    {
+      "level": "9",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "80"
+    },
+    {
+      "level": "10",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "90"
+    },
+    {
+      "level": "11",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "100"
+    },
+    {
+      "level": "12",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "110"
+    },
+    {
+      "level": "13",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "120"
+    },
+    {
+      "level": "14",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "130"
+    },
+    {
+      "level": "15",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "140"
+    },
+    {
+      "level": "16",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "150"
+    },
+    {
+      "level": "17",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "160"
+    },
+    {
+      "level": "18",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "170"
+    },
+    {
+      "level": "19",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "180"
+    },
+    {
+      "level": "20",
+      "maxHp": "300",
+      "attack": "30",
+      "totalExp": "190"
     }
   ]
 

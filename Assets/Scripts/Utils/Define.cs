@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Define 
 {
+    public enum WorldObject
+    {
+        Unknown,
+        Player,
+        Monster
+    }
+
     public enum Layer
     {
         Monster=6,
@@ -22,7 +29,8 @@ public class Define
         UnKnown,
         Login,
         Lobby,
-        Game
+        Game,
+        EndingScene
 
     }
     public enum UIEvent
@@ -41,5 +49,10 @@ public class Define
     {
         QuarterView,
         ThirdPersonView
+    }
+
+    public enum EffectType
+    {
+        Default,
     }
 }
